@@ -56,6 +56,7 @@
             button4 = new Button();
             dataGridView1 = new DataGridView();
             button5 = new Button();
+            button6 = new Button();
             ((System.ComponentModel.ISupportInitialize)pictureBox1).BeginInit();
             ((System.ComponentModel.ISupportInitialize)dataGridView1).BeginInit();
             SuspendLayout();
@@ -212,7 +213,7 @@
             button1.FlatAppearance.MouseDownBackColor = Color.Yellow;
             button1.ForeColor = SystemColors.WindowText;
             button1.Image = (Image)resources.GetObject("button1.Image");
-            button1.Location = new Point(52, 211);
+            button1.Location = new Point(12, 211);
             button1.Name = "button1";
             button1.Size = new Size(107, 85);
             button1.TabIndex = 17;
@@ -272,7 +273,7 @@
             button2.FlatAppearance.MouseDownBackColor = Color.Yellow;
             button2.ForeColor = SystemColors.WindowText;
             button2.Image = (Image)resources.GetObject("button2.Image");
-            button2.Location = new Point(188, 211);
+            button2.Location = new Point(157, 211);
             button2.Name = "button2";
             button2.Size = new Size(106, 85);
             button2.TabIndex = 22;
@@ -287,7 +288,7 @@
             btnExcluirTodos.FlatAppearance.MouseDownBackColor = Color.Yellow;
             btnExcluirTodos.ForeColor = SystemColors.WindowText;
             btnExcluirTodos.Image = (Image)resources.GetObject("btnExcluirTodos.Image");
-            btnExcluirTodos.Location = new Point(327, 211);
+            btnExcluirTodos.Location = new Point(301, 211);
             btnExcluirTodos.Name = "btnExcluirTodos";
             btnExcluirTodos.Size = new Size(106, 85);
             btnExcluirTodos.TabIndex = 23;
@@ -301,7 +302,7 @@
             button3.FlatAppearance.MouseDownBackColor = Color.Yellow;
             button3.ForeColor = SystemColors.WindowText;
             button3.Image = (Image)resources.GetObject("button3.Image");
-            button3.Location = new Point(468, 211);
+            button3.Location = new Point(443, 211);
             button3.Name = "button3";
             button3.Size = new Size(106, 85);
             button3.TabIndex = 24;
@@ -316,7 +317,7 @@
             button4.FlatAppearance.MouseDownBackColor = Color.Yellow;
             button4.ForeColor = SystemColors.WindowText;
             button4.Image = (Image)resources.GetObject("button4.Image");
-            button4.Location = new Point(610, 211);
+            button4.Location = new Point(589, 211);
             button4.Name = "button4";
             button4.Size = new Size(106, 85);
             button4.TabIndex = 25;
@@ -335,19 +336,38 @@
             // 
             // button5
             // 
+            button5.BackColor = SystemColors.ButtonShadow;
+            button5.ForeColor = SystemColors.ActiveCaptionText;
+            button5.Image = (Image)resources.GetObject("button5.Image");
             button5.Location = new Point(413, 378);
             button5.Name = "button5";
-            button5.Size = new Size(62, 26);
+            button5.Size = new Size(62, 54);
             button5.TabIndex = 27;
-            button5.UseVisualStyleBackColor = true;
+            button5.UseVisualStyleBackColor = false;
             button5.Visible = false;
             button5.Click += button5_Click;
+            // 
+            // button6
+            // 
+            button6.BackColor = Color.Yellow;
+            button6.FlatAppearance.BorderColor = Color.FromArgb(255, 128, 0);
+            button6.FlatAppearance.BorderSize = 50;
+            button6.FlatAppearance.MouseDownBackColor = Color.Yellow;
+            button6.ForeColor = SystemColors.WindowText;
+            button6.Image = (Image)resources.GetObject("button6.Image");
+            button6.Location = new Point(723, 211);
+            button6.Name = "button6";
+            button6.Size = new Size(106, 85);
+            button6.TabIndex = 28;
+            button6.UseVisualStyleBackColor = false;
+            button6.Click += button6_Click;
             // 
             // Form1
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(851, 466);
+            Controls.Add(button6);
             Controls.Add(button5);
             Controls.Add(dataGridView1);
             Controls.Add(button4);
@@ -413,5 +433,6 @@
         private Button button4;
         private DataGridView dataGridView1;
         private Button button5;
+        private Button button6;
     }
 }

@@ -157,7 +157,7 @@ namespace Registros
 
         private void button2_Click(object sender, EventArgs e)
         {
-            
+
             lblcdcliente.Visible = true;
             btnExcluirCliente.Visible = true;
             textBox1.Visible = true;
@@ -295,6 +295,82 @@ namespace Registros
         private void button5_Click(object sender, EventArgs e)
         {
             LimparCampos();
+        }
+
+        private void button6_Click(object sender, EventArgs e)
+        {
+            string codigoCliente = textBox1.Text.Trim(); // Código do cliente a ser atualizado
+            string nome = textBox2.Text.Trim();
+            string cpf = mskCPF.Text.Trim();
+            string rg = mskRG.Text.Trim();
+            string celular = maskedTextBox2.Text.Trim();
+            string dataNascimento = maskedTextBox1.Text.Trim();
+            string ufNascimento = cmbUF.SelectedItem?.ToString(); // UF
+
+            string sexo = GetSexo();
+            if (sexo == null)
+            {
+                MessageBox.Show("Selecione um sexo.", "Erro", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
+            }
+
+            // Validação dos campos obrigatórios
+            if (string.IsNullOrEmpty(codigoCliente) || string.IsNullOrEmpty(nome) || string.IsNullOrEmpty(cpf) ||
+                string.IsNullOrEmpty(rg) || string.IsNullOrEmpty(celular) || string.IsNullOrEmpty(dataNascimento) ||
+                string.IsNullOrEmpty(ufNascimento))
+            {
+                MessageBox.Show("Todos os campos são obrigatórios!", "Erro", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
+            }
+
+            // Validação da data de nascimento
+            if (!DateTime.TryParse(dataNascimento, out DateTime parsedDate))
+            {
+                MessageBox.Show("Data de nascimento inválida.", "Erro", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
+            }
+
+            // Conexão com o banco de dados
+            using (MySqlConnection conn = new MySqlConnection(connectionString))
+            {
+                try
+                {
+                    conn.Open();
+                    string query = "UPDATE clientes SET nome = @Nome, cpf = @CPF, rg = @RG, celular = @Celular, " +
+                                   "dataNascimento = @DataNascimento, sexo = @Sexo, uf_nascimento = @UFnascimento " +
+                                   "WHERE Cliente = @Cliente";
+
+                    using (MySqlCommand cmd = new MySqlCommand(query, conn))
+                    {
+                        cmd.Parameters.Add("@Cliente", MySqlDbType.Int32).Value = Convert.ToInt32(codigoCliente);
+                        cmd.Parameters.Add("@Nome", MySqlDbType.VarChar).Value = nome;
+                        cmd.Parameters.Add("@CPF", MySqlDbType.VarChar).Value = cpf;
+                        cmd.Parameters.Add("@RG", MySqlDbType.VarChar).Value = rg;
+                        cmd.Parameters.Add("@Celular", MySqlDbType.VarChar).Value = celular;
+                        cmd.Parameters.Add("@DataNascimento", MySqlDbType.Date).Value = parsedDate;
+                        cmd.Parameters.Add("@Sexo", MySqlDbType.VarChar).Value = sexo;
+                        cmd.Parameters.Add("@UFnascimento", MySqlDbType.VarChar).Value = ufNascimento;
+
+                        // Executa o comando
+                        int result = cmd.ExecuteNonQuery();
+
+                        // Verifica se o registro foi atualizado com sucesso
+                        if (result > 0)
+                        {
+                            MessageBox.Show("Cliente atualizado com sucesso!", "Sucesso", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                            LimparCampos();
+                        }
+                        else
+                        {
+                            MessageBox.Show("Falha ao atualizar o cliente. Verifique se o código está correto.", "Erro", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                        }
+                    }
+                }
+                catch (MySqlException ex)
+                {
+                    MessageBox.Show("Erro ao conectar ao banco de dados: " + ex.Message, "Erro", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
+            }
         }
     }
 }
